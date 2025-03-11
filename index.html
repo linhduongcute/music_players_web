@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <header class="logo"><i class="fab fa-apple"></i>Music</header>
+
+        <section class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search..." />
+        </section>
+
+        <nav class="menu">
+          <section class="menu-section">
+            <header class="menu-header">
+              <span>Music</span>
+              <span class="count">5</span>
+            </header>
+            <ul class="menu-list">
+              <li class="active"><i class="fas fa-home"></i> Home</li>
+              <li><i class="fas fa-compass"></i> Discover</li>
+              <li><i class="fas fa-th-large"></i> Browse</li>
+              <li>
+                <i class="fas fa-podcast"></i> Podcasts
+                <span class="new-badge">NEW</span>
+              </li>
+              <li><i class="fas fa-broadcast-tower"></i> Radio</li>
+            </ul>
+          </section>
+
+          <section class="menu-section">
+            <header class="menu-header">
+              <span>Library</span>
+              <span class="count">3</span>
+            </header>
+            <ul class="menu-list">
+              <li><i class="fas fa-compact-disc"></i> Albums</li>
+              <li><i class="fas fa-music"></i> Song</li>
+              <li><i class="fas fa-user-friends"></i> Artists</li>
+            </ul>
+          </section>
+        </nav>
+
+        <footer class="user-profile">
+          <img src="https://via.placeholder.com/40" alt="User Profile" />
+          <div class="user-info">
+            <div class="user-name">Vitaliy Dorozhko</div>
+            <div class="user-status">Premium member</div>
+          </div>
+        </footer>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <section class="listening-section">
+          <article class="featured-card">
+            <div class="featured-info">
+              <span class="featured-label">Artist's name</span>
+              <!----tên playlist đang phát-->
+              <h2 class="featured-title">Listening ....</h2>
+              <p class="featured-stats">
+                <i class="fas fa-user"></i> 98,029 Monthly listeners
+              </p>
+              <div class="featured-actions">
+                <button class="play-button">
+                  <i class="fas fa-play"></i> Play
+                </button>
+                <button class="follow-button">Follow</button>
+              </div>
+            </div>
+            <figure class="featured-image">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ao1P8YqPqB7AvHf03xQhnONxQw52aK.png"
+                alt="Featured Artist"
+              />
+            </figure>
+          </article>
+
+          <section class="playlist-section">
+            <header class="section-header">
+              <h2>Playlist</h2>
+              <a href="#" class="show-all">Show all</a>
+            </header>
+
+            <div class="playlist-header">
+              <span class="playlist-number">#</span>
+              <span class="playlist-title">TITLE</span>
+              <span class="playlist-artist">ARTIST</span>
+              <span class="playlist-time">TIME</span>
+              <span class="playlist-album">ALBUM</span>
+            </div>
+
+            <ul class="playlist-items">
+              <li class="playlist-item">
+                <span class="playlist-number">01</span>
+                <span class="playlist-title">Sleep 4Ever</span>
+                <span class="playlist-artist">Blackbear</span>
+                <span class="playlist-time">4:12</span>
+                <span class="playlist-album">HoneyWorks</span>
+              </li>
+              <li class="playlist-item active">
+                <span class="playlist-number">02</span>
+                <span class="playlist-title">
+                  <i class="fas fa-volume-up"></i> Time is Ticking Out
+                </span>
+                <span class="playlist-artist">The Cranberries</span>
+                <span class="playlist-time">4:20</span>
+                <span class="playlist-album">Wake up And Smell T...</span>
+              </li>
+              <li class="playlist-item">
+                <span class="playlist-number">03</span>
+                <span class="playlist-title">If I were u</span>
+                <span class="playlist-artist">Lauv</span>
+                <span class="playlist-time">3:12</span>
+                <span class="playlist-album">The Ecstatic</span>
+              </li>
+              <li class="playlist-item">
+                <span class="playlist-number">04</span>
+                <span class="playlist-title">One Minute More</span>
+                <span class="playlist-artist">Gun Kelly</span>
+                <span class="playlist-time">2:56</span>
+                <span class="playlist-album">Superself</span>
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section class="player-controls">
+          <div class="player-buttons">
+            <button class="player-button"><i class="far fa-heart"></i></button>
+            <button class="player-button"><i class="fas fa-plus"></i></button>
+            <button class="player-button"><i class="fas fa-random"></i></button>
+            <button class="player-button">
+              <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="player-button play-pause">
+              <i class="fas fa-pause"></i>
+            </button>
+            <button class="player-button">
+              <i class="fas fa-step-forward"></i>
+            </button>
+            <button class="player-button"><i class="fas fa-redo"></i></button>
+            <button class="player-button">
+              <i class="fas fa-volume-up"></i>
+            </button>
+          </div>
+          <div class="player-progress">
+            <time class="current-time">1:30</time>
+            <div class="progress-bar">
+              <div class="progress-filled"></div>
+            </div>
+            <time class="total-time">4:20</time>
+          </div>
+        </section>
+      </main>
+
+      <!-- Right Sidebar -->
+      <aside class="right-sidebar">
+        <section class="tags-section">
+          <header class="section-header">
+            <h2>Tags</h2>
+            <a href="#" class="more-link"
+              >More <i class="fas fa-chevron-right"></i
+            ></a>
+          </header>
+          <ul class="tags-container">
+            <li class="tag"><i class="fas fa-guitar"></i> Acoustic</li>
+            <li class="tag"><i class="fas fa-music"></i> Piano jazz</li>
+            <li class="tag"><i class="fas fa-saxophone"></i> Jazz</li>
+            <li class="tag"><i class="fas fa-headphones"></i> Indie pop</li>
+          </ul>
+        </section>
+
+        <section class="played-section">
+          <header class="section-header">
+            <h2>Played</h2>
+            <a href="#" class="see-all">See all</a>
+          </header>
+          <ul class="played-items">
+            <li class="played-item">
+              <img src="https://via.placeholder.com/50" alt="Album Cover" />
+              <div class="played-info">
+                <span class="played-title">Blank Space</span>
+                <span class="played-artist">Taylor Swift</span>
+              </div>
+              <time class="played-time">4 min ago</time>
+            </li>
+            <li class="played-item">
+              <img src="https://via.placeholder.com/50" alt="Album Cover" />
+              <div class="played-info">
+                <span class="played-title">Side Effects</span>
+                <span class="played-artist">The Chainsmokers</span>
+              </div>
+              <time class="played-time">20 min ago</time>
+            </li>
+            <li class="played-item">
+              <img src="https://via.placeholder.com/50" alt="Album Cover" />
+              <div class="played-info">
+                <span class="played-title">No One Like You</span>
+                <span class="played-artist">Scorpions</span>
+              </div>
+              <time class="played-time">2 hr ago</time>
+            </li>
+            <li class="played-item">
+              <img src="https://via.placeholder.com/50" alt="Album Cover" />
+              <div class="played-info">
+                <span class="played-title">Always Love You</span>
+                <span class="played-artist">Elton John</span>
+              </div>
+              <time class="played-time">3 hr ago</time>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <div class="right-sidebar">
+            <div class="logout-section">
+              <button class="logout-button">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+              </button>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
