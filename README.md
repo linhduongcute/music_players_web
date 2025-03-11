@@ -6,8 +6,8 @@ This is  a modern and user-friendly online platform that allows users to enjoy t
 - Users can perform functions such as adding music to their regular or favorite playlists, uploading/downloading music.
 - The system can analyze the content of MP3/OGG/WAV files.
 # DEVELOPMENT FEATURES
-Build a website with a complete basic layout, focusing on HTML and CSS.
-Main pages include a login page (interface only, no functionality yet) and a music player page.
-Properly organize and distribute information sections on the interface.
-Enable audio playback from pre-existing audio files.
-Deploy using Docker and expose a port for browser access
+- Build a website with a complete basic layout, focusing on HTML and CSS.
+- Main pages include a login page (interface only, no functionality yet) and a music player page.
+- Properly organize and distribute information sections on the interface.
+- Enable audio playback from pre-existing audio files.
+- Deploy using Docker and expose a port for browser access
