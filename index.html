@@ -14,14 +14,16 @@
     <div class="app-container">
       <!-- Sidebar -->
       <aside class="sidebar">
-        <header class="logo"><i class="fab fa-apple"></i>Music</header>
-
-        <section class="search-bar">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search..." />
-        </section>
-
+        <header class="logo"><i class="fab fa-apple"></i> Music</header>
         <nav class="menu">
+          <section class="user-profile">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMvEbKIGsZCbu1m-rgbPgukFUgHg2SiDfuLw&s" alt="User Profile" />
+          <div class="user-info">
+            <div class="user-name">Vitaliy Dorozhko</div>
+            <div class="user-status">Premium member</div>
+          </div>
+          </section>
+
           <section class="menu-section">
             <header class="menu-header">
               <span>Music</span>
@@ -53,22 +55,32 @@
         </nav>
 
         <footer class="user-profile">
-          <img src="https://via.placeholder.com/40" alt="User Profile" />
+          <!-- <img src="https://via.placeholder.com/40" alt="User Profile" />
           <div class="user-info">
             <div class="user-name">Vitaliy Dorozhko</div>
             <div class="user-status">Premium member</div>
-          </div>
+          </div> -->
+          <ul class="menu-list">
+            <li><i class="fas fa-sign-out-alt"></i> Log out</li>
+          </ul>
         </footer>
       </aside>
 
       <!-- Main Content -->
       <main class="main-content">
+        <section class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search..." />
+        </section>
         <section class="listening-section">
           <article class="featured-card">
             <div class="featured-info">
               <span class="featured-label">Artist's name</span>
-              <!----tên playlist đang phát-->
-              <h2 class="featured-title">Listening ....</h2>
+              <div>
+                <h2 class="featured-title">
+                  Listening <span id="song-listening">...</span>
+                </h2>                
+              </div>
               <p class="featured-stats">
                 <i class="fas fa-user"></i> 98,029 Monthly listeners
               </p>
@@ -141,13 +153,13 @@
             <button class="player-button"><i class="far fa-heart"></i></button>
             <button class="player-button"><i class="fas fa-plus"></i></button>
             <button class="player-button"><i class="fas fa-random"></i></button>
-            <button class="player-button">
+            <button class="player-button" id="prevButton">
               <i class="fas fa-step-backward"></i>
             </button>
-            <button class="player-button play-pause">
-              <i class="fas fa-pause"></i>
+            <button class="player-button play-pause" id="playPauseBtn">
+              <i class="fas fa-play"></i>
             </button>
-            <button class="player-button">
+            <button class="player-button" id="nextButton">
               <i class="fas fa-step-forward"></i>
             </button>
             <button class="player-button"><i class="fas fa-redo"></i></button>
@@ -156,13 +168,59 @@
             </button>
           </div>
           <div class="player-progress">
-            <time class="current-time">1:30</time>
-            <div class="progress-bar">
-              <div class="progress-filled"></div>
+            <time class="current-time" id="currentTime">0:00</time>
+            <div class="progress-bar" id="progressBar">
+              <div class="progress-filled" id="progressFilled"></div>
             </div>
-            <time class="total-time">4:20</time>
+            <time class="total-time" id="totalTime">0:00</time>
           </div>
         </section>
+        
+        <audio id="audio">
+          <source src="test.mp3" type="audio/mp3">
+        </audio>
+        
+        <script>
+          const audio = document.getElementById("audio");
+          audio.src = audio.querySelector("source").src;
+          const playPauseBtn = document.getElementById("playPauseBtn");
+          const progressBar = document.getElementById("progressBar");
+          const progressFilled = document.getElementById("progressFilled");
+          const currentTimeDisplay = document.getElementById("currentTime");
+          const totalTimeDisplay = document.getElementById("totalTime");
+          const songListening = document.getElementById("song-listening");
+
+          playPauseBtn.addEventListener("click", () => {
+            if (audio.paused) {
+              audio.play();
+              playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+              songListening.textContent = audio.src.split("/").pop();
+            } else {
+              audio.pause();
+              playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+          });
+        
+          audio.addEventListener("timeupdate", () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressFilled.style.width = `${progress}%`;
+            currentTimeDisplay.textContent = formatTime(audio.currentTime);
+            totalTimeDisplay.textContent = formatTime(audio.duration);
+          });
+        
+          // GPT
+          progressBar.addEventListener("click", (e) => {
+            const newTime = (e.offsetX / progressBar.offsetWidth) * audio.duration;
+            audio.currentTime = newTime;
+          });
+        
+          function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+          }
+          //GPT
+        </script>
       </main>
 
       <!-- Right Sidebar -->
@@ -221,15 +279,6 @@
               <time class="played-time">3 hr ago</time>
             </li>
           </ul>
-        </section>
-        <section>
-          <div class="right-sidebar">
-            <div class="logout-section">
-              <button class="logout-button">
-                <i class="fas fa-sign-out-alt"></i> Log Out
-              </button>
-            </div>
-          </div>
         </section>
       </aside>
     </div>

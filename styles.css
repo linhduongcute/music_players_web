@@ -398,7 +398,6 @@ body {
 .progress-filled {
   position: absolute;
   height: 100%;
-  width: 35%;
   background-color: var(--accent-color);
   border-radius: 2px;
 }
