@@ -1,51 +1,4 @@
 let playlistArray = []; // Danh sách bài hát (cần cập nhật khi tải nhạc)
-document.addEventListener("DOMContentLoaded", function () {
-  loadSongs();
-  const browseButton = document.getElementById("browseButton");
-  const homeButton = document.querySelector(".menu-list li:first-child"); // Nút Home
-  const mainContent = document.querySelector(".main-content");
-  const uploadSection = document.getElementById("uploadDownloadSection");
-  const fileInput = document.getElementById("fileInput");
-  const uploadButton = document.getElementById("uploadButton");
-
-  if (browseButton && homeButton && mainContent && uploadSection) {
-    // Khi bấm "Browse", ẩn trang chủ và hiển thị phần upload
-    browseButton.addEventListener("click", function () {
-      mainContent.style.display = "none";
-      uploadSection.style.display = "block";
-    });
-
-    // Khi bấm "Home", ẩn phần upload và quay về trang chủ
-    homeButton.addEventListener("click", function () {
-      uploadSection.style.display = "none";
-      mainContent.style.display = "block";
-    });
-  }
-
-  if (uploadButton && fileInput) {
-    uploadButton.addEventListener("click", async function () {
-      const file = fileInput.files[0];
-      if (!file) {
-        alert("Vui lòng chọn một file MP3!");
-        return;
-      }
-    });
-  }
-});
-
-function sanitizeFileName(fileName) {
-  return fileName
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "") // Xóa dấu tiếng Việt
-    .replace(/\s+/g, "_") // Thay dấu cách bằng dấu _
-    .replace(/[^\w.-]/g, ""); // Xóa ký tự đặc biệt
-}
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${minutes}:${secs.toString().padStart(2, "0")}`;
-}
 
 async function addSong(title, artist, duration, album, file_path) {
   const { data, error } = await supabaseClient.from("songs").insert([
@@ -166,7 +119,6 @@ async function loadSongs() {
   });
   attachSongClickEvent();
 }
-window.loadSongs = loadSongs;
 
 document.addEventListener("DOMContentLoaded", loadSongs);
 
