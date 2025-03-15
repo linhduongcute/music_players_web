@@ -1,0 +1,128 @@
+.hidden {
+  display: none;
+}
+
+#uploadDownloadSection {
+  display: none; /* Ẩn mặc định */
+  padding: 20px;
+  background: #1a1a2e;
+  border-radius: 10px;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+#uploadDownloadSection::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* Upload & Download Box */
+.upload-container,
+.download-container {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--hover-color);
+}
+
+/* Tiêu đề */
+.upload-container h3,
+.download-container h3 {
+  color: var(--text-primary);
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Input File */
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 2px dashed var(--border-color);
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+input[type="file"]:hover {
+  border-color: var(--accent-color);
+}
+
+/* Nút Upload */
+#uploadButton {
+  width: 100%;
+  padding: 12px;
+  background: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* CSS cho form upload nhạc */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 450px;
+  margin: auto;
+  padding: 24px;
+  border-radius: 12px;
+  background: var(--background-secondary);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.upload-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.upload-input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  width: 100%;
+  font-size: 14px;
+  background: var(--background-input);
+  color: var(--text-primary);
+}
+.upload-button {
+  padding: 12px;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s ease-in-out;
+}
+
+.upload-button:hover {
+  background: var(--primary-color-dark);
+}
+
+.upload-status {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--success-color);
+  text-align: center;
+}
+
+/* Danh sách nhạc */
+#songList {
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
