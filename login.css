@@ -1,0 +1,70 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to right, #1e1e1e, #292929);
+  color: white;
+  text-align: center;
+}
+
+.login-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.login-container input {
+  width: 300px;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.login-container input:focus {
+  border: 2px solid #ff4d4d;
+}
+
+.login-container button {
+  width: 320px;
+  padding: 12px;
+  margin-top: 10px;
+  background: #ff4d4d;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-container button:hover {
+  background: #e63c3c;
+}
+
+#error-message {
+  color: #ff4d4d;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Hiệu ứng nhập */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-container {
+  animation: fadeIn 0.5s ease-in-out;
+}
