@@ -1,9 +1,10 @@
-/* Reset and Base Styles */
+/* Home Page Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 :root {
@@ -118,7 +119,6 @@ body {
 }
 
 .user-profile {
-  margin-top: auto;
   display: flex;
   align-items: center;
   padding: 10px 0;
@@ -150,8 +150,16 @@ body {
 .main-content {
   padding: 20px;
   overflow-y: auto;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /* Ẩn thanh cuộn trên các trình duyệt phổ biến */
+  scrollbar-width: none; /* Firefox */
+}
+
+.main-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 .navigation-controls {
@@ -234,7 +242,7 @@ body {
   gap: 15px;
 }
 
-.play-button {
+.download-button {
   background-color: var(--accent-color);
   color: white;
   border: none;
@@ -248,13 +256,16 @@ body {
 }
 
 .follow-button {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
+  background-color: var(--accent-color);
+  color: white;
   border: none;
   padding: 10px 25px;
   border-radius: 30px;
   font-weight: 500;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .featured-image {
@@ -333,7 +344,8 @@ body {
   color: var(--accent-color);
 }
 
-.playlist-artist, .playlist-album {
+.playlist-artist,
+.playlist-album {
   color: var(--text-secondary);
 }
 
@@ -381,7 +393,8 @@ body {
   gap: 10px;
 }
 
-.current-time, .total-time {
+.current-time,
+.total-time {
   color: var(--text-secondary);
   font-size: 12px;
   min-width: 35px;
@@ -398,7 +411,6 @@ body {
 .progress-filled {
   position: absolute;
   height: 100%;
-  width: 35%;
   background-color: var(--accent-color);
   border-radius: 2px;
 }
@@ -526,7 +538,7 @@ body {
   .app-container {
     grid-template-columns: 240px 1fr;
   }
-  
+
   .right-sidebar {
     display: none;
   }
@@ -536,12 +548,53 @@ body {
   .app-container {
     grid-template-columns: 1fr;
   }
-  
+
   .sidebar {
     display: none;
   }
-  
+
   .featured-title {
     font-size: 28px;
   }
+}
+
+/* ===================
+    🎵 Favorite Styles
+    =================== */
+#favoriteSongsSection {
+  display: none;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  width: 60%;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#favoriteSongsSection h2 {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+#favoriteSongsList {
+  list-style: none;
+  padding: 0;
+}
+
+#favoriteSongsList li {
+  background: var(--hover-color);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#favoriteSongsList li:hover {
+  background: var(--accent-color);
+  cursor: pointer;
 }
