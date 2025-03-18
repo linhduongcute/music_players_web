@@ -71,7 +71,6 @@ async function saveSongInfo(title, artist, duration, album, filePath) {
 }
 
 document.getElementById("uploadButton").addEventListener("click", uploadMusic);
-
 async function loadSongs() {
   const { data, error } = await supabaseClient.from("songs").select("*");
   const songList = document.getElementById("songList");
@@ -114,7 +113,8 @@ async function loadSongs() {
     }</span>
       <span class="playlist-album" data-album="${song.album}">${
       song.album
-    }</span>    `;
+    }</span>
+    <span class="favorite-icon" data-fav="false">🤍</span>    `;
     songList.prepend(songItem);
   });
   attachSongClickEvent();
@@ -161,6 +161,7 @@ function addToPlaylist(title, artist, time, album, file_path) {
     <span class="playlist-artist">${artist}</span>
     <span class="playlist-time">${time}</span>
     <span class="playlist-album">${album}</span>
+    <span class="favorite-icon" data-fav="false">🤍</span>
   `;
 
   playlistElement.appendChild(songItem);
@@ -168,6 +169,8 @@ function addToPlaylist(title, artist, time, album, file_path) {
 
   console.log("Danh sách phát trong JS:", playlistArray);
   alert("Bài hát được thêm vào danh sách!");
+
+  updateFavoriteIcons();
 }
 
 async function getSongURL(filePath) {
@@ -181,4 +184,23 @@ async function getSongURL(filePath) {
   }
 
   return data.publicUrl;
+}
+
+function updateFavoriteIcons() {
+  document.querySelectorAll(".favorite-icon").forEach((icon, index) => {
+    icon.addEventListener("click", function () {
+      // Đảo trạng thái yêu thích
+      const isFav = playlistArray[index].favorite;
+      playlistArray[index].favorite = !isFav;
+
+      // Cập nhật icon hiển thị
+      icon.textContent = isFav ? "🤍" : "❤️";
+      icon.classList.toggle("active", !isFav);
+
+      console.log(
+        `Bài hát "${playlistArray[index].title}" yêu thích:`,
+        playlistArray[index].favorite
+      );
+    });
+  });
 }

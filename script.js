@@ -28,6 +28,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
+// 🎵 Hiển thị menu active
+// ==========================
+document.addEventListener("DOMContentLoaded", function () {
+  const menuItems = document.querySelectorAll(".menu-list li");
+
+  menuItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      // Xóa class active khỏi tất cả các mục
+      menuItems.forEach((li) => li.classList.remove("active"));
+
+      // Thêm class active vào mục được click
+      this.classList.add("active");
+    });
+  });
+});
+
+// ==========================
 // 🎵 Phát nhạc
 // ==========================
 document.addEventListener("DOMContentLoaded", function () {

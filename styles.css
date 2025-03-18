@@ -300,7 +300,7 @@ body {
 
 .playlist-header {
   display: grid;
-  grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 2fr 1fr 1fr 1fr 1fr;
   padding: 10px 0;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-secondary);
@@ -313,7 +313,7 @@ body {
 
 .playlist-item {
   display: grid;
-  grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 2fr 1fr 1fr 1fr 1fr;
   padding: 12px 0;
   border-radius: 8px;
   transition: background-color 0.2s;
@@ -597,4 +597,15 @@ body {
 #favoriteSongsList li:hover {
   background: var(--accent-color);
   cursor: pointer;
+}
+
+.favorite-icon {
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 10px;
+  transition: color 0.2s;
+}
+
+.favorite-icon.active {
+  color: red;
 }
