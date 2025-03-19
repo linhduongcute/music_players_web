@@ -1,3 +1,30 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Playing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="songTitle"></h1>
+    <audio id="audioPlayer" controls></audio>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const title = params.get("title");
+        const file = params.get("file");
+
+        if (title && file) {
+            document.getElementById("songTitle").textContent = title;
+            document.getElementById("audioPlayer").src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${file}`;
+        } else {
+            document.body.innerHTML = "<h2>Song not found!</h2>";
+        }
+    </script>
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,10 +32,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Player</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="uploads.css" />
+    <link rel="stylesheet" href="result.css" />
 
     <link
       rel="stylesheet"
@@ -146,82 +172,13 @@
             <input type="text" id="searchInput" placeholder="Search for a song..." autocomplete="off">
             <ul id="suggestions"></ul>
         </section>
-          <section class="listening-section">
-            <article class="featured-card">
-              <div class="featured-info">
-                <span id="featured-label" class="featured-label"
-                  >Select a song...</span
-                >
-                <h2 class="featured-title">
-                  Listening: <span id="song-listening">...</span>
-                </h2>
-                <div class="featured-actions">
-                  <button id="download-button" class="download-button">
-                    <i class="fas fa-download"></i> Download
-                  </button>
-                  <button class="follow-button">Follow</button>
-                </div>
-              </div>
-              <figure class="featured-image">
-                <img
-                  id="featured-image"
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ao1P8YqPqB7AvHf03xQhnONxQw52aK.png"
-                  alt="Featured Artist"
-                />
-              </figure>
-            </article>
-
-            <section class="playlist-section">
-              <header class="section-header">
-                <h2>Playlist</h2>
-                <a href="#" class="show-all">Show all</a>
-              </header>
-
-              <div class="playlist-header">
-                <span class="playlist-number">#</span>
-                <span class="playlist-title">TITLE</span>
-                <span class="playlist-artist">ARTIST</span>
-                <span class="playlist-time">TIME</span>
-                <span class="playlist-album">ALBUM</span>
-                <span class="playlist-favour"></span>
-              </div>
-
-              <ul class="playlist-items" id="playlist">
-                <!-- Bài hát sẽ được thêm vào đây sau khi ấn Play -->
-              </ul>
-            </section>
-          </section>
-
-          <section class="player-controls">
-            <div class="player-buttons">
-              <button class="player-button">
-                <i class="far fa-heart"></i>
-              </button>
-              <button class="player-button" id="prevButton">
-                <i class="fas fa-step-backward"></i>
-              </button>
-              <button class="player-button play-pause" id="playPauseBtn">
-                <i class="fas fa-play"></i>
-              </button>
-              <button class="player-button" id="nextButton">
-                <i class="fas fa-step-forward"></i>
-              </button>
-              <button class="player-button" id="replayButton">
-                <i class="fas fa-redo"></i>
-              </button>
+        <section>
+            <div class="">
+                <h1>Results<span id="searchInput"></span></h1>
             </div>
-            <div class="player-progress">
-              <span id="currentTime">0:00</span>
-              <div class="progress-bar" id="progressBar">
-                <div class="progress-filled" id="progressFilled"></div>
-              </div>
-              <span id="totalTime">0:00</span>
-            </div>
-          </section>
-
-          <audio id="audio">
-            <source src="test.mp3" type="audio/mp3" />
-          </audio>
+        </section>
+        <section class="grid-container">
+        </section>
         </div>
       </main>
       <!-- Right Sidebar -->
@@ -318,3 +275,4 @@
   <script src="uploads.js"></script>
   <script src="search-bar.js"></script>
 </html>
+

@@ -69,24 +69,33 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Danh sách bài hát trống!");
       return;
     }
-
+  
+    document.querySelectorAll(".playlist-item").forEach((item) => item.classList.remove("active"));
+  
     if (SongIndex < playlistArray.length - 1) {
       SongIndex++;
     } else {
-      SongIndex = 0; // Quay lai bai dua tien nhe Thao Linh
+      SongIndex = 0;
     }
+
     songName.textContent = playlistArray[SongIndex].title;
+    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
     audio.src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${playlistArray[SongIndex].filePath}`;
     audio.play().catch((error) => {
       console.warn("Không thể tự động phát bài hát:", error);
     });
+  
+    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
   });
+  
 
   playPrevBtn.addEventListener("click", function () {
     if (playlistArray.length === 0) {
       console.error("Danh sách bài hát trống!");
       return;
     }
+
+    document.querySelectorAll(".playlist-item").forEach((item) => item.classList.remove("active"));
 
     if (SongIndex != 0 || SongIndex < playlistArray.length - 1) {
       SongIndex--;
@@ -96,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     songName.textContent = playlistArray[SongIndex].title;
     audio.src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${playlistArray[SongIndex].filePath}`;
     audio.play();
+    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
   });
 });
 

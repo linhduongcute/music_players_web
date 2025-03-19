@@ -199,10 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (uploadButton && fileInput) {
     uploadButton.addEventListener("click", async function () {
       const file = fileInput.files[0];
-      if (!file) {
-        alert("Vui lòng chọn một file MP3!");
-        return;
-      }
     });
   }
 });
