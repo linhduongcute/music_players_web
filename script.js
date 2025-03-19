@@ -146,6 +146,7 @@ function downloadSong(filePath) {
 
     let fileName = filePath.split("/").pop();
     const downloadUrl = `${songUrl}?download=${fileName}`;
+    console.log(downloadUrl)
     const a = document.createElement("a");
     a.href = downloadUrl;
     a.download = fileName; // Đặt tên file khi tải về

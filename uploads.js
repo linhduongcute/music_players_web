@@ -1,5 +1,18 @@
 let playlistArray = [];
 
+async function getSongURL(filePath) {
+  const { data, error } = await supabaseClient.storage
+    .from("music") // Tên bucket trong Supabase
+    .getPublicUrl(filePath);
+
+  if (error) {
+    console.error("Lỗi lấy URL bài hát:", error.message);
+    return null;
+  }
+
+  return data.publicUrl;
+}
+
 function sanitizeFileName(fileName) {
   return fileName
       .replace(/[^a-zA-Z0-9.-]/g, "_") 
@@ -141,7 +154,7 @@ function attachSongClickEvent() {
           }).then((result) => {
               if (result.isConfirmed) {
                 addToPlaylist(title, artist, time, album, path);
-                const songUrl = getSongURL(path);
+                const songUrl = getSongUrl(path);
                 console.log("FilePath từ dataset:", item.dataset.file_path);
                 console.log("URL nhạc từ Supabase:", songUrl);
               }
