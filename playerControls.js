@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.warn("Không thể tự động phát bài hát:", error);
     });
   });
+  
   replayBtn.addEventListener("click", function () {
     audio.currentTime = 0;
     audio.play();
@@ -124,29 +125,3 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-const favBtn = document.querySelectorAll(".favorite-icon");
-
-document.querySelectorAll(".favorite-icon").forEach((btn) => {
-  favBtn.addEventListener("click", function () {
-    console.log("hehehehehehehehehe");
-    this.textContent = this.textContent === "🤍" ? "❤️" : "🤍";
-  });
-});
-
-
-// document.querySelectorAll(".favorite-icon").forEach((icon, SongIndex) => {
-//       icon.addEventListener("click", function () {
-//           // const isFav = playlistArray[index].favorite;
-//           // playlistArray[index].favorite = !isFav;
-
-//           // icon.textContent = isFav ? "🤍" : "❤️";
-//           // icon.classList.toggle("active", !isFav);
-//           console.log(playlistArray[SongIndex]);
-
-//           Swal.fire({
-//               title: "Bỏ yêu thích? Đã thêm vào yêu thích!",
-//               text: `Bài hát: ${playlistArray[SongIndex].title}`,
-//               // icon: isFav ? "warning" : "success",
-//           });
-//       });
-//   });

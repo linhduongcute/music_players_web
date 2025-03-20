@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!item) return;
 
     document
-      .querySelectorAll(".playlist-item")
+      .querySelectorAll(".played-items")
       .forEach((el) => el.classList.remove("active"));
     item.classList.add("active");
 

@@ -122,7 +122,6 @@ async function loadSongs() {
           <span class="playlist-artist">${song.artist}</span>
           <span class="playlist-time">${song.duration}</span>
           <span class="playlist-album">${song.album}</span>
-          <span class="favorite-icon" data-fav="false">🤍</span>
       `;
       songList.prepend(songItem);
   });
@@ -168,16 +167,24 @@ function addToPlaylist(title, artist, time, album, file_path) {
   if (!playlistElement) return;
 
   const songItem = document.createElement("li");
-  songItem.classList.add("playlist-item");
+  songItem.classList.add("playled-item");
   songItem.dataset.file_path = file_path || "";
 
   songItem.innerHTML = `
-      <span class="playlist-number">${playlistElement.children.length + 1}</span>
-      <span class="playlist-title">${title}</span>
-      <span class="playlist-artist">${artist}</span>
-      <span class="playlist-time">${time}</span>
-      <span class="playlist-album">${album}</span>
-      <span class="favorite-icon" data-fav="false">🤍</span>
+      <li class="played-item">
+      <div class="queue-first"> 
+        <span class="queue-number">${playlistElement.children.length + 1}</span>
+          <img
+            src="https://i1.sndcdn.com/artworks-nt0wvUsd3oaFQOtc-DcNv2A-t500x500.png"
+            alt="Album Cover"
+          />
+      </div>
+        <div class="played-info">
+          <span class="playlist-title">${title}</span>
+          <br />
+          <span class="playlist-artist">${artist}</span>
+        </div>
+      </li>
   `;
 
   playlistElement.appendChild(songItem);
