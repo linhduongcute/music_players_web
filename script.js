@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const songTitle = item.querySelector(".playlist-title").textContent;
     const artistName = item.querySelector(".playlist-artist").textContent;
     const filePath = item.dataset.file_path; // Đường dẫn file trong Storage
-    const songImage = item.dataset.image || "https://via.placeholder.com/150"; // Ảnh bài hát (nếu có)
+    const songImage = item.dataset.image || "https://images.squarespace-cdn.com/content/v1/5d2e2c5ef24531000113c2a4/1564770295807-EJFN4EE3T23YXLMJMVJ5/image-asset.png";
 
     featuredTitle.textContent = songTitle;
     featuredLabel.textContent = artistName;

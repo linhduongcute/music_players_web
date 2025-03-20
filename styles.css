@@ -635,6 +635,7 @@ ul#suggestions li:hover {
   font-size: 18px;
   margin-left: 10px;
   transition: color 0.2s;
+  z-index: 9999;
 }
 
 .favorite-icon.active {

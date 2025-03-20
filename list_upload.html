@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Player</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="uploads.css" />
-    <link rel="stylesheet" href="result.css" />
 
     <link
       rel="stylesheet"
@@ -68,57 +69,17 @@
         </ul>
       </aside>
       <main>
+        <section class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search for a song..." autocomplete="off">
+            <ul id="suggestions"></ul>
+        </section>
         <!---Favourite Song-->
         <section id="favoriteSongsSection" class="hidden">
           <h2>Favorite Songs</h2>
           <ul id="favoriteSongsList"></ul>
         </section>
         <!-- Browse Section -->
-
-        <div id="uploadDownloadSection" class="hidden">
-          <section>
-            <h2>Upload Music</h2>
-            <div id="uploadForm" class="upload-container">
-              <label for="songTitle" class="upload-label"
-                >🎵 Tên bài hát:</label
-              >
-              <input
-                type="text"
-                id="songTitle"
-                class="upload-input"
-                placeholder="Nhập tên bài hát"
-              />
-
-              <label for="artistName" class="upload-label">🎤 Nghệ sĩ:</label>
-              <input
-                type="text"
-                id="artistName"
-                class="upload-input"
-                placeholder="Nhập tên nghệ sĩ"
-              />
-
-              <label for="albumName" class="upload-label">💿 Album:</label>
-              <input
-                type="text"
-                id="albumName"
-                class="upload-input"
-                placeholder="Nhập tên album"
-              />
-
-              <label for="fileInput" class="upload-label"
-                >📁 Chọn file MP3:</label
-              >
-              <input
-                type="file"
-                id="fileInput"
-                class="upload-input"
-                accept="audio/mp3"
-              />
-
-              <button id="uploadButton" class="upload-button">⬆ Upload</button>
-            </div>
-            <div id="uploadStatus" class="upload-status"></div>
-          </section>
           <section class="playlist-section">
             <header class="section-header">
               <h2>Uploaded Songs</h2>
@@ -145,13 +106,7 @@
             <input type="text" id="searchInput" placeholder="Search for a song..." autocomplete="off">
             <ul id="suggestions"></ul>
         </section>
-        <section>
-            <div class="">
-                <h1>Results<span id="searchInput"></span></h1>
-            </div>
-        </section>
-        <section class="grid-container">
-        </section>
+          </section>
         </div>
       </main>
       <!-- Right Sidebar -->
@@ -245,7 +200,6 @@
     <script src="playerControls.js"></script>
   </body>
   <script src="script.js"></script>
-  <script src="uploads.js"></script>
+  <script src="list_upload.js"></script>
   <script src="search-bar.js"></script>
 </html>
-

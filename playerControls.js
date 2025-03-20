@@ -1,3 +1,5 @@
+let SongIndex = 0; // Bắt đầu từ bài đầu tiên
+
 document.addEventListener("DOMContentLoaded", function () {
   const audio = document.getElementById("audio");
   const playPauseBtn = document.getElementById("playPauseBtn");
@@ -33,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.currentTime = seekTime;
   });
 
-  let SongIndex = 0; // Bắt đầu từ bài đầu tiên
   audio.addEventListener("ended", function () {
     console.log(SongIndex);
     if (playlistArray.length === 0) {
@@ -122,3 +123,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+const favBtn = document.querySelectorAll(".favorite-icon");
+
+document.querySelectorAll(".favorite-icon").forEach((btn) => {
+  favBtn.addEventListener("click", function () {
+    console.log("hehehehehehehehehe");
+    this.textContent = this.textContent === "🤍" ? "❤️" : "🤍";
+  });
+});
+
+
+// document.querySelectorAll(".favorite-icon").forEach((icon, SongIndex) => {
+//       icon.addEventListener("click", function () {
+//           // const isFav = playlistArray[index].favorite;
+//           // playlistArray[index].favorite = !isFav;
+
+//           // icon.textContent = isFav ? "🤍" : "❤️";
+//           // icon.classList.toggle("active", !isFav);
+//           console.log(playlistArray[SongIndex]);
+
+//           Swal.fire({
+//               title: "Bỏ yêu thích? Đã thêm vào yêu thích!",
+//               text: `Bài hát: ${playlistArray[SongIndex].title}`,
+//               // icon: isFav ? "warning" : "success",
+//           });
+//       });
+//   });

@@ -187,20 +187,3 @@ function addToPlaylist(title, artist, time, album, file_path) {
   updateFavoriteIcons();
 }
 
-function updateFavoriteIcons() {
-  document.querySelectorAll(".favorite-icon").forEach((icon, index) => {
-      icon.addEventListener("click", function () {
-          const isFav = playlistArray[index].favorite;
-          playlistArray[index].favorite = !isFav;
-
-          icon.textContent = isFav ? "🤍" : "❤️";
-          icon.classList.toggle("active", !isFav);
-
-          Swal.fire({
-              title: isFav ? "Bỏ yêu thích!" : "Đã thêm vào yêu thích!",
-              text: `Bài hát: ${playlistArray[index].title}`,
-              icon: isFav ? "warning" : "success",
-          });
-      });
-  });
-}
