@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Khi click vào bài hát trong playlist, cập nhật thông tin và phát nhạc
   playlistElement.addEventListener("click", async function (event) {
-    const item = event.target.closest(".playlist-item");
+    const item = event.target.closest(".played-items");
     if (!item) return;
 
     document
