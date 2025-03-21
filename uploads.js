@@ -23,10 +23,10 @@ function formatTime(seconds) {
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 }
 
-async function addSong(title, artist, duration, album, file_path, image_url) {
+async function addSong(title, artist, duration, album, file_path, image_src) {
   const { data, error } = await supabaseClient
     .from("songs")
-    .insert([{ title, artist, duration, album, file_path, image_url }]);
+    .insert([{ title, artist, duration, album, file_path, image_src }]);
 
   if (error) {
     Swal.fire("Lỗi!", "Không thể thêm bài hát vào database!", "error");
@@ -37,7 +37,6 @@ async function addSong(title, artist, duration, album, file_path, image_url) {
   Swal.fire("Thành công!", "Bài hát đã được thêm vào database!", "success");
   loadSongs();
 }
-
 
 async function uploadMusic() {
   const fileInput = document.getElementById("fileInput");
@@ -126,7 +125,10 @@ async function loadSongs() {
     const songItem = document.createElement("li");
     songItem.classList.add("playlist-item");
     songItem.dataset.file_path = song.file_path || "";
-    songItem.dataset.image_url = song.image_url || "https://www.wagbet.com/wp-content/uploads/2019/11/music_placeholder.png";
+    songItem.dataset.image_src =
+      song.image_src ||
+      "https://www.wagbet.com/wp-content/uploads/2019/11/music_placeholder.png";
+    console.log(song.image_src);
 
     songItem.innerHTML = `
       <span class="playlist-number">${index + 1}</span>
@@ -134,13 +136,13 @@ async function loadSongs() {
       <span class="playlist-artist">${song.artist}</span>
       <span class="playlist-time">${song.duration}</span>
       <span class="playlist-album">${song.album}</span>
+      
     `;
     songList.prepend(songItem);
   });
 
   attachSongClickEvent();
 }
-
 
 document.addEventListener("DOMContentLoaded", loadSongs);
 
@@ -152,7 +154,7 @@ function attachSongClickEvent() {
       const time = this.querySelector(".playlist-time").textContent;
       const album = this.querySelector(".playlist-album").textContent;
       const path = this.dataset.file_path;
-      const image_src = this.dataset.image_url;
+      const image_src = this.dataset.image_src;
 
       if (!title || !artist || !time || !album || !path) {
         Swal.fire("Lỗi!", "Dữ liệu bài hát bị thiếu!", "error");
@@ -176,6 +178,7 @@ function attachSongClickEvent() {
       addToPlaylist(title, artist, time, album, path, image_src);
       const songUrl = getSongURL(path);
       console.log("FilePath từ dataset:", item.dataset.file_path);
+      console.log("URL anhr từ Supabase:", item.dataset.image_src);
       console.log("URL nhạc từ Supabase:", songUrl);
     });
   });
@@ -201,7 +204,14 @@ function addToPlaylist(title, artist, time, album, file_path, image_src) {
   `;
   console.log(image_src);
   playlistElement.appendChild(songItem);
-  playlistArray.push({ title, artist, time, album, filePath: file_path, image_src });
+  playlistArray.push({
+    title,
+    artist,
+    time,
+    album,
+    filePath: file_path,
+    image_src,
+  });
 
   Swal.fire(
     "Thành công!",
