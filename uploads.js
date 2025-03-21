@@ -128,7 +128,6 @@ async function loadSongs() {
     songItem.dataset.image_src =
       song.image_src ||
       "https://www.wagbet.com/wp-content/uploads/2019/11/music_placeholder.png";
-    console.log(song.image_src);
 
     songItem.innerHTML = `
       <span class="playlist-number">${index + 1}</span>
@@ -160,21 +159,6 @@ function attachSongClickEvent() {
         Swal.fire("Lỗi!", "Dữ liệu bài hát bị thiếu!", "error");
         return;
       }
-      /*
-      Swal.fire({
-        title: `Thêm bài hát "${title}"?`,
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonText: "Thêm vào hàng chờ",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          addToPlaylist(title, artist, time, album, path);
-          const songUrl = getSongUrl(path);
-          console.log("FilePath từ dataset:", item.dataset.file_path);
-          console.log("URL nhạc từ Supabase:", songUrl);
-        }
-      });
-      */
       addToPlaylist(title, artist, time, album, path, image_src);
       const songUrl = getSongURL(path);
       console.log("FilePath từ dataset:", item.dataset.file_path);
@@ -202,7 +186,6 @@ function addToPlaylist(title, artist, time, album, file_path, image_src) {
       <span class="playlist-artist">${artist}</span>
     </div>
   `;
-  console.log(image_src);
   playlistElement.appendChild(songItem);
   playlistArray.push({
     title,

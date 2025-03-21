@@ -41,6 +41,7 @@
               <li class="active"><i class="fas fa-home"></i> Home</li>
               <li><i class="fas fa-compass"></i> Discover</li>
               <li id="browseButton"><i class="fas fa-th-large"></i> Browse</li>
+              <li id="favButton"><i class="fas fa-th-large"></i> Favorite</li>
               <li>
                 <i class="fas fa-podcast"></i> Podcasts
                 <span class="new-badge">NEW</span>
@@ -70,10 +71,14 @@
       </aside>
       <main>
         <!---Favourite Song-->
-        <section id="favoriteSongsSection" class="hidden">
-          <h2>Favorite Songs</h2>
-          <ul id="favoriteSongsList"></ul>
-        </section>
+        <div id="favoriteSongsSection" class="hidden">
+          <section>
+            <h2>Favorite Songs</h2>
+            <ul class="favPlaylist-items" id="favList">
+                
+            </ul>
+          </section>
+        </div>
         <!-- Browse Section -->
 
         <div id="uploadDownloadSection" class="hidden">
@@ -257,4 +262,5 @@
   <script src="script.js"></script>
   <script src="uploads.js"></script>
   <script src="search-bar.js"></script>
+  <script src="favorite.js"></script>
 </html>

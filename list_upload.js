@@ -118,11 +118,11 @@ async function addToFavoritePlaylist(title, artist, duration, album, file_path) 
 }
 
 function showFavoritePlaylist(title, artist, time, album, file_path) {
-    const playlistElement = document.getElementById("playlist");
+    const playlistElement = document.getElementById("favList");
     if (!playlistElement) return;
   
     const songItem = document.createElement("li");
-    songItem.classList.add("playlist-item");
+    songItem.classList.add("favPlaylist-item");
     songItem.dataset.file_path = file_path || "";
   
     songItem.innerHTML = `
@@ -131,7 +131,6 @@ function showFavoritePlaylist(title, artist, time, album, file_path) {
         <span class="playlist-artist">${artist}</span>
         <span class="playlist-time">${time}</span>
         <span class="playlist-album">${album}</span>
-        <span class="favorite-icon" data-fav="false">🤍</span>
     `;
   
     playlistElement.appendChild(songItem);

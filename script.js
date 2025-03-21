@@ -179,23 +179,33 @@ console.log("Supabase client initialized successfully!");
 document.addEventListener("DOMContentLoaded", function () {
   loadSongs();
   const browseButton = document.getElementById("browseButton");
+  const favButton = document.getElementById("favButton");
   const homeButton = document.querySelector(".menu-list li:first-child"); // Nút Home
   const mainContent = document.querySelector(".main-content");
   const uploadSection = document.getElementById("uploadDownloadSection");
+  const favSection = document.getElementById("favoriteSongsSection");
   const fileInput = document.getElementById("fileInput");
   const uploadButton = document.getElementById("uploadButton");
 
-  if (browseButton && homeButton && mainContent && uploadSection) {
+  if (browseButton && homeButton && mainContent && uploadSection && favButton && favSection) {
     // Khi bấm "Browse", ẩn trang chủ và hiển thị phần upload
     browseButton.addEventListener("click", function () {
       mainContent.style.display = "none";
       uploadSection.style.display = "block";
+      favSection.style.display = "none";
     });
 
     // Khi bấm "Home", ẩn phần upload và quay về trang chủ
     homeButton.addEventListener("click", function () {
       uploadSection.style.display = "none";
       mainContent.style.display = "block";
+      favSection.style.display = "none";
+    });
+
+    favButton.addEventListener("click", function () {
+      uploadSection.style.display = "none";
+      mainContent.style.display = "none";
+      favSection.style.display = "block";
     });
   }
 
@@ -205,3 +215,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
