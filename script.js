@@ -1,4 +1,5 @@
 const playPauseBtn = document.getElementById("playPauseBtn");
+const searchResult = document.getElementById("searchResult");
 // ==========================
 // 🎵 Kiểm tra đăng nhập
 // ==========================
@@ -208,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
       mainContent.style.display = "none";
       uploadSection.style.display = "block";
       favSection.style.display = "none";
+      searchResult.style.display = "none";
     });
 
     // Khi bấm "Home", ẩn phần upload và quay về trang chủ
@@ -215,12 +217,14 @@ document.addEventListener("DOMContentLoaded", function () {
       uploadSection.style.display = "none";
       mainContent.style.display = "block";
       favSection.style.display = "none";
+      searchResult.style.display = "none";
     });
 
     favButton.addEventListener("click", function () {
       uploadSection.style.display = "none";
       mainContent.style.display = "none";
       favSection.style.display = "block";
+      searchResult.style.display = "none";
     });
   }
 
@@ -273,5 +277,5 @@ async function fetchFavoriteSongs() {
   }
 }
 
-// Gọi hàm khi trang tải xong
+// // Gọi hàm khi trang tải xong
 document.addEventListener("DOMContentLoaded", fetchFavoriteSongs);

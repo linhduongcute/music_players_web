@@ -698,3 +698,24 @@ ul#suggestions li:hover {
 /* .playlist-image_src {
   display: none;
 } */
+
+.resultContainer {
+  margin-top: 30px;
+}
+
+.resultContainer h2 {
+  margin-left: 40px;
+}
+
+/* .resultBox {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.resultBox h2 {
+  margin-bottom: 5px;
+}
+
+.resultBox img {
+  border-radius: 10px;
+} */

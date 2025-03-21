@@ -1,86 +1,53 @@
 const searchInput = document.getElementById("searchInput");
 const suggestionsList = document.getElementById("suggestions");
-const resultsContainer = document.getElementById("results"); // Thêm phần tử hiển thị kết quả
+const resultsContainer = document.getElementById("results");
+const searchResultSection = document.getElementById("searchResult");
 
-searchInput.addEventListener("input", async function () {
-    const inputText = this.value.toLowerCase();
-    suggestionsList.innerHTML = "";
-
-    if (inputText.length === 0) {
-        suggestionsList.style.display = "none";
-        return;
-    }
-
-    // 🔥 Fetch song list from Supabase
-    const { data, error } = await supabaseClient
-        .from("songs")
-        .select("title, file_path")
-        .ilike("title", `%${inputText}%`); // Case-insensitive search
-
-    if (error) {
-        console.error("Error fetching songs:", error.message);
-        return;
-    }
-
-    if (data.length === 0) {
-        suggestionsList.style.display = "none";
-        return;
-    }
-
-    data.forEach(song => {
-        const li = document.createElement("li");
-        li.textContent = song.title;
-        li.addEventListener("click", function () {
-            // 🔀 Redirect to song.html with parameters
-            const songUrl = `result.html?title=${encodeURIComponent(song.title)}&file=${encodeURIComponent(song.file_path)}`;
-            window.location.href = songUrl;
-        });
-        suggestionsList.appendChild(li);
-    });
-
-    suggestionsList.style.display = "block";
-});
-
-// 📌 Hiển thị kết quả trên trang khi ấn Enter
 searchInput.addEventListener("keydown", async function (event) {
     if (event.key === "Enter") {
-        event.preventDefault(); // Ngăn form tự động gửi (nếu có)
-        const inputText = searchInput.value.toLowerCase();
+        const mainContent = document.querySelector(".main-content");
+        const uploadSection = document.getElementById("uploadDownloadSection");
+        const favSection = document.getElementById("favoriteSongsSection");
+        uploadSection.style.display = "none";
+        mainContent.style.display = "none";
+        favSection.style.display = "none";
 
-        if (inputText.length === 0) return;
+        event.preventDefault();
+        resultsContainer.innerHTML = "";
+        const inputText = this.value.toLowerCase().trim();
+        
+        if (!inputText) {
+            searchResultSection.classList.add("hidden");
+            return;
+        }
 
-        // 🔥 Fetch song list từ Supabase
         const { data, error } = await supabaseClient
             .from("songs")
-            .select("title, file_path")
+            .select("title, artist, album, duration, file_path, image_src")
             .ilike("title", `%${inputText}%`);
 
-        if (error) {
-            console.error("Error fetching songs:", error.message);
-            return;
-        }
-
-        // Xóa kết quả cũ trước khi thêm kết quả mới
-        resultsContainer.innerHTML = "";
-
-        if (data.length === 0) {
-            resultsContainer.innerHTML = "<p>Không tìm thấy bài hát nào.</p>";
-            return;
-        }
-
-        const ul = document.createElement("ul");
-        data.forEach(song => {
-            const li = document.createElement("li");
-            li.innerHTML = `<strong>${song.title}</strong> - <a href="result.html?title=${encodeURIComponent(song.title)}&file=${encodeURIComponent(song.file_path)}">Nghe ngay</a>`;
-            ul.appendChild(li);
-        });
-
-        resultsContainer.appendChild(ul);
+        if (error) return;
+        displaySearchResults(data);
     }
 });
 
-document.addEventListener("click", function (event) {
-    if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
-        suggestionsList.style.display = "none";
-    }
-});
+function displaySearchResults(data) {
+    resultsContainer.innerHTML = data.length
+        ? `<div style="display: flex; flex-direction: column; gap: 10px;">
+            ${data.map(song => `
+                <div style="display: flex; align-items: center; padding: 10px;">
+                    <img src="${song.image_src}" class="resultImg" style="width: 100px; height: 100px; border-radius: 10px; margin-right: 15px;"> 
+                    <div>
+                        <h3>${song.title}</h3>
+                        Nghệ sĩ: ${song.artist}<br>
+                        Album: ${song.album}<br>
+                        Thời lượng: ${song.duration}<br>
+                        <button onclick="addToPlaylist('${song.title}', '${song.artist}', '${song.duration}', '${song.album}', '${song.file_path}', '${song.image_src}')">
+                            Add to queue
+                        </button>
+                    </div>
+                </div>`).join('')}
+            </div>`
+        : "<p>Không tìm thấy bài hát nào.</p>";
+    searchResultSection.classList.remove("hidden");
+}

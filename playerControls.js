@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         text: "Bài hát đã được thêm vào danh sách yêu thích!",
       });
     }
+    fetchFavoriteSongs();
   });
 });
 

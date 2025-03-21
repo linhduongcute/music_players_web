@@ -3,153 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Songs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        #searchContainer {
-            position: relative;
-            width: 300px;
-        }
-        #searchInput {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        #suggestions {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border: 1px solid #ccc;
-            border-top: none;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        #suggestions li {
-            padding: 8px;
-            cursor: pointer;
-            border-bottom: 1px solid #ddd;
-        }
-        #suggestions li:hover {
-            background: #f0f0f0;
-        }
-        #results {
-            margin-top: 20px;
-        }
-    </style>
+    <title>🎵 Tìm kiếm bài hát</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script defer src="test.js"></script> <!-- Kết nối file JS -->
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        input { width: 80%; padding: 10px; font-size: 16px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px; cursor: pointer; background: #f0f0f0; margin: 5px 0; }
+        li:hover { background: #ddd; }
+        #suggestions, #results { text-align: left; margin-top: 10px; }
+    </style>
 </head>
 <body>
 
-    <h1>Search Songs</h1>
-    <div id="searchContainer">
-        <input type="text" id="searchInput" placeholder="Nhập tên bài hát...">
-        <ul id="suggestions"></ul>
-    </div>
+    <h2>🎵 Tìm kiếm bài hát</h2>
+    
+    <!-- Ô nhập liệu tìm kiếm -->
+    <input type="text" id="searchInput" placeholder="Nhập tên bài hát..." autocomplete="off">
 
+    <!-- Hiển thị gợi ý -->
+    <ul id="suggestions" style="display:none;"></ul>
+
+    <!-- Hiển thị kết quả khi Enter -->
     <div id="results"></div>
-
-    <script>
-        // 🔥 Kết nối Supabase (THAY URL và KEY của bạn vào đây)
-        const supabaseClient = supabase.createClient(
-            "https://SUPABASE_URL.supabase.co",
-            "SUPABASE_ANON_KEY"
-        );
-
-        const searchInput = document.getElementById("searchInput");
-        const suggestionsList = document.getElementById("suggestions");
-        const resultsContainer = document.getElementById("results");
-
-        searchInput.addEventListener("input", async function () {
-            const inputText = this.value.toLowerCase();
-            suggestionsList.innerHTML = "";
-
-            if (inputText.length === 0) {
-                suggestionsList.style.display = "none";
-                return;
-            }
-
-            // 🔥 Fetch danh sách bài hát từ Supabase
-            const { data, error } = await supabaseClient
-                .from("songs")
-                .select("title, file_path")
-                .ilike("title", `%${inputText}%`);
-
-            if (error) {
-                console.error("Lỗi khi lấy dữ liệu:", error.message);
-                return;
-            }
-
-            if (data.length === 0) {
-                suggestionsList.style.display = "none";
-                return;
-            }
-
-            data.forEach(song => {
-                const li = document.createElement("li");
-                li.textContent = song.title;
-                li.addEventListener("click", function () {
-                    // 🔀 Chuyển hướng đến trang result.html
-                    const songUrl = `result.html?title=${encodeURIComponent(song.title)}&file=${encodeURIComponent(song.file_path)}`;
-                    window.location.href = songUrl;
-                });
-                suggestionsList.appendChild(li);
-            });
-
-            suggestionsList.style.display = "block";
-        });
-
-        // 📌 Hiển thị kết quả trên trang khi nhấn Enter
-        searchInput.addEventListener("keydown", async function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                const inputText = searchInput.value.toLowerCase();
-
-                if (inputText.length === 0) return;
-
-                // 🔥 Fetch danh sách bài hát
-                const { data, error } = await supabaseClient
-                    .from("songs")
-                    .select("title, file_path")
-                    .ilike("title", `%${inputText}%`);
-
-                if (error) {
-                    console.error("Lỗi khi lấy dữ liệu:", error.message);
-                    return;
-                }
-
-                resultsContainer.innerHTML = "";
-
-                if (data.length === 0) {
-                    resultsContainer.innerHTML = "<p>Không tìm thấy bài hát nào.</p>";
-                    return;
-                }
-
-                const ul = document.createElement("ul");
-                data.forEach(song => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<strong>${song.title}</strong> - <a href="result.html?title=${encodeURIComponent(song.title)}&file=${encodeURIComponent(song.file_path)}">Nghe ngay</a>`;
-                    ul.appendChild(li);
-                });
-
-                resultsContainer.appendChild(ul);
-            }
-        });
-
-        // Ẩn gợi ý khi click ngoài vùng tìm kiếm
-        document.addEventListener("click", function (event) {
-            if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
-                suggestionsList.style.display = "none";
-            }
-        });
-    </script>
 
 </body>
 </html>
