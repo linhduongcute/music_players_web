@@ -130,7 +130,6 @@
               <span class="playlist-artist">ARTIST</span>
               <span class="playlist-time">TIME</span>
               <span class="playlist-album">ALBUM</span>
-              <span class="playlist-favour"></span>
             </div>
 
             <ul class="playlist-items" id="songList">
@@ -147,68 +146,28 @@
         </section>
         <section>
             <div class="">
-                <h1>Results<span id="searchInput"></span></h1>
+                <h1>Results</h1>
             </div>
         </section>
+        <section>
+          <ul class="result-items" id="resultList">
+            <!-- Các kết quả sẽ được load ở đây từ JavaScript -->
+          </ul>
+      </section>
         <section class="grid-container">
         </section>
         </div>
       </main>
       <!-- Right Sidebar -->
       <aside class="right-sidebar">
-        <section class="played-section">
-          <header class="section-header">
-            <h2>Queue</h2>
-            <a href="#" class="see-all">See all</a>
-          </header>
-          <ul class="played-items">
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">Blank Space</span>
-                <br />
-                <span class="played-artist">Taylor Swift</span>
-              </div>
-            </li>
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">Side Effects</span>
-                <br />
-                <span class="played-artist">The Chainsmokers</span>
-              </div>
-            </li>
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">No One Like You</span>
-                <br />
-                <span class="played-artist">Scorpions</span>
-              </div>
-            </li>
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">Always Love You</span>
-                <br />
-                <span class="played-artist">Elton John</span>
-              </div>
-            </li>
-          </ul>
-        </section>
-        <section class="played-section">
+        <header class="section-header">
+          <h2>Queue</h2>
+        </header>
+        <ul class="playlist-items" id="playlist">
+          <!-- Bài hát sẽ được thêm vào đây sau khi ấn Play -->
+        </ul>
+
+        <!-- <section class="played-section">
           <header class="section-header">
             <h2>Played</h2>
             <a href="#" class="see-all">See all</a>
@@ -239,7 +198,7 @@
               <time class="played-time">20 min ago</time>
             </li>
           </ul>
-        </section>
+        </section> -->
       </aside>
     </div>
     <script src="playerControls.js"></script>
