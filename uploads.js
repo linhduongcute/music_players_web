@@ -1,4 +1,5 @@
 let playlistArray = [];
+const audio = document.getElementById("audio");
 
 async function getSongURL(filePath) {
   const { data, error } = await supabaseClient.storage
@@ -161,6 +162,7 @@ function attachSongClickEvent() {
       }
       addToPlaylist(title, artist, time, album, path, image_src);
       const songUrl = getSongURL(path);
+      document.getElementById("mainImg").src =  item.dataset.image_src;
       console.log("FilePath từ dataset:", item.dataset.file_path);
       console.log("URL anhr từ Supabase:", item.dataset.image_src);
       console.log("URL nhạc từ Supabase:", songUrl);

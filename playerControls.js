@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const playPrevBtn = document.getElementById("prevButton");
   const replayBtn = document.getElementById("replayButton");
   const songName = document.getElementById("song-listening");
+  const addFavButton = document.getElementById("addFavButton");
 
   // 🚀 Play/Pause nhạc
   playPauseBtn.addEventListener("click", function () {
@@ -108,6 +109,44 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${playlistArray[SongIndex].filePath}`;
     audio.play();
     document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
+  });
+
+  addFavButton.addEventListener("click", async function () {
+    const audioElement = document.getElementById("audio");
+
+    if (!audioElement.src) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: "Không có bài hát nào đang phát!",
+      });
+      return;
+    }
+
+    // Thêm bài hát vào bảng `favourite`
+    const { error } = await supabaseClient.from("favourite").insert([
+      {
+        title: playlistArray[SongIndex].title,
+        artist:  playlistArray[SongIndex].artist,
+        duration: audio.duration,
+        album: playlistArray[SongIndex].album,
+        file_path: playlistArray[SongIndex].filePath,
+      },
+    ]);
+
+    if (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: `Không thể thêm bài hát: ${error.message}`,
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: "Bài hát đã được thêm vào danh sách yêu thích!",
+      });
+    }
   });
 });
 

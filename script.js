@@ -1,3 +1,4 @@
+const playPauseBtn = document.getElementById("playPauseBtn");
 // ==========================
 // 🎵 Kiểm tra đăng nhập
 // ==========================
@@ -68,6 +69,22 @@ document.addEventListener("DOMContentLoaded", function () {
     return data.publicUrl;
   }
 
+  async function getSongImage(songTitle) {
+    const { data, error } = await supabaseClient
+      .from("songs")
+      .select("image_src")
+      .ilike("title", songTitle) // Không phân biệt chữ hoa/thường
+      .single();
+
+    if (error || !data) {
+      console.error("Lỗi hoặc không tìm thấy bài hát:", error?.message);
+      return "default-image.jpg"; 
+    }
+    return data.image_src;
+}
+
+  
+
   // Khi click vào bài hát trong playlist, cập nhật thông tin và phát nhạc
   playlistElement.addEventListener("click", async function (event) {
     const item = event.target.closest(".queue-item");
@@ -81,13 +98,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const songTitle = item.querySelector(".playlist-title").textContent;
     const artistName = item.querySelector(".playlist-artist").textContent;
     const filePath = item.dataset.file_path; // Đường dẫn file trong Storage
-    const songImage =
-      item.dataset.image ||
-      "https://images.squarespace-cdn.com/content/v1/5d2e2c5ef24531000113c2a4/1564770295807-EJFN4EE3T23YXLMJMVJ5/image-asset.png";
-
+    const image_src = await getSongImage(songTitle);
+    console.log (image_src);
     featuredTitle.textContent = songTitle;
     featuredLabel.textContent = artistName;
-    // featuredImage.src = songImage;
+    document.getElementById("mainImg").src = image_src;
 
     if (!filePath) {
       console.error("Không tìm thấy đường dẫn file.");
@@ -101,7 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Cập nhật giao diện Listening Feature
       featuredTitle.textContent = songTitle;
       featuredLabel.textContent = artistName;
-
+      audio.play();
+      playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
       const downloadButton = document.getElementById("download-button");
       downloadButton.onclick = function () {
         downloadSong(filePath);
@@ -179,7 +195,6 @@ console.log("Supabase client initialized successfully!");
 document.addEventListener("DOMContentLoaded", function () {
   loadSongs();
   const browseButton = document.getElementById("browseButton");
-  const favButton = document.getElementById("favButton");
   const homeButton = document.querySelector(".menu-list li:first-child"); // Nút Home
   const mainContent = document.querySelector(".main-content");
   const uploadSection = document.getElementById("uploadDownloadSection");
@@ -217,3 +232,46 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+async function fetchFavoriteSongs() {
+  try {
+      // Truy vấn tất cả bài hát từ bảng `songs`
+      const { data, error } = await supabaseClient
+          .from("favourite")
+          .select("id, title, artist, duration, album");
+
+      if (error) throw error; // Báo lỗi nếu truy vấn thất bại
+
+      // Kiểm tra nếu không có bài hát
+      if (!data || data.length === 0) {
+          console.log("Không có bài hát nào trong danh sách yêu thích.");
+          return;
+      }
+
+      // Chèn dữ liệu vào HTML
+      const section = document.getElementById("favoriteSongsSection");
+      const playlistContainer = document.createElement("div");
+      playlistContainer.classList.add("playlist-container");
+
+      data.forEach((song, index) => {
+          const songRow = document.createElement("li");
+          songRow.classList.add("playlist-row");
+          songRow.innerHTML = `
+              <span class="playlist-number">${index + 1}</span>
+              <span class="playlist-title">${song.title}</span>
+              <span class="playlist-artist">${song.artist}</span>
+              <span class="playlist-time">${song.duration}</span>
+              <span class="playlist-album">${song.album}</span>
+          `;
+
+          playlistContainer.appendChild(songRow);
+      });
+
+      section.appendChild(playlistContainer);
+      section.classList.remove("hidden"); // Hiển thị danh sách bài hát
+  } catch (error) {
+      console.error("Lỗi khi tải danh sách bài hát:", error.message);
+  }
+}
+
+// Gọi hàm khi trang tải xong
+document.addEventListener("DOMContentLoaded", fetchFavoriteSongs);
