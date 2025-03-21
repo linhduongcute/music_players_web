@@ -23,10 +23,10 @@ function formatTime(seconds) {
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 }
 
-async function addSong(title, artist, duration, album, file_path) {
+async function addSong(title, artist, duration, album, file_path, image_url) {
   const { data, error } = await supabaseClient
     .from("songs")
-    .insert([{ title, artist, duration, album, file_path }]);
+    .insert([{ title, artist, duration, album, file_path, image_url }]);
 
   if (error) {
     Swal.fire("Lỗi!", "Không thể thêm bài hát vào database!", "error");
@@ -37,6 +37,7 @@ async function addSong(title, artist, duration, album, file_path) {
   Swal.fire("Thành công!", "Bài hát đã được thêm vào database!", "success");
   loadSongs();
 }
+
 
 async function uploadMusic() {
   const fileInput = document.getElementById("fileInput");
@@ -125,19 +126,21 @@ async function loadSongs() {
     const songItem = document.createElement("li");
     songItem.classList.add("playlist-item");
     songItem.dataset.file_path = song.file_path || "";
+    songItem.dataset.image_url = song.image_url || "https://www.wagbet.com/wp-content/uploads/2019/11/music_placeholder.png";
 
     songItem.innerHTML = `
-          <span class="playlist-number">${index + 1}</span>
-          <span class="playlist-title">${song.title}</span>
-          <span class="playlist-artist">${song.artist}</span>
-          <span class="playlist-time">${song.duration}</span>
-          <span class="playlist-album">${song.album}</span>
-      `;
+      <span class="playlist-number">${index + 1}</span>
+      <span class="playlist-title">${song.title}</span>
+      <span class="playlist-artist">${song.artist}</span>
+      <span class="playlist-time">${song.duration}</span>
+      <span class="playlist-album">${song.album}</span>
+    `;
     songList.prepend(songItem);
   });
 
   attachSongClickEvent();
 }
+
 
 document.addEventListener("DOMContentLoaded", loadSongs);
 
@@ -149,6 +152,7 @@ function attachSongClickEvent() {
       const time = this.querySelector(".playlist-time").textContent;
       const album = this.querySelector(".playlist-album").textContent;
       const path = this.dataset.file_path;
+      const image_src = this.dataset.image_url;
 
       if (!title || !artist || !time || !album || !path) {
         Swal.fire("Lỗi!", "Dữ liệu bài hát bị thiếu!", "error");
@@ -169,7 +173,7 @@ function attachSongClickEvent() {
         }
       });
       */
-      addToPlaylist(title, artist, time, album, path);
+      addToPlaylist(title, artist, time, album, path, image_src);
       const songUrl = getSongURL(path);
       console.log("FilePath từ dataset:", item.dataset.file_path);
       console.log("URL nhạc từ Supabase:", songUrl);
@@ -177,31 +181,31 @@ function attachSongClickEvent() {
   });
 }
 
-function addToPlaylist(title, artist, time, album, file_path) {
+function addToPlaylist(title, artist, time, album, file_path, image_src) {
   const playlistElement = document.getElementById("playlist");
   if (!playlistElement) return;
 
   const songItem = document.createElement("li");
-  songItem.classList.add("playlist-item");
+  songItem.classList.add("queue-item");
   songItem.dataset.file_path = file_path || "";
 
   songItem.innerHTML = `
-      <span class="playlist-number">${
-        playlistElement.children.length + 1
-      }</span>
-    <span class="playlist-title">${title}</span>
-    <span class="playlist-artist">${artist}</span>
-    <span class="playlist-time">${time}</span>
-    <span class="playlist-album">${album}</span>
+    <span class="playlist-number">${playlistElement.children.length + 1}</span>
+    <span class="playlist-img">
+      <img src="${image_src}" width="50" alt="${title}"> 
+    </span>
+    <div> 
+      <span class="playlist-title">${title}</span>
+      <span class="playlist-artist">${artist}</span>
+    </div>
   `;
-
+  console.log(image_src);
   playlistElement.appendChild(songItem);
-  playlistArray.push({ title, artist, time, album, filePath: file_path });
+  playlistArray.push({ title, artist, time, album, filePath: file_path, image_src });
 
   Swal.fire(
     "Thành công!",
     "Bài hát đã được thêm vào danh sách phát!",
     "success"
   );
-  //updateFavoriteIcons();
 }

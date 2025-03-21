@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Khi click vào bài hát trong playlist, cập nhật thông tin và phát nhạc
   playlistElement.addEventListener("click", async function (event) {
-    const item = event.target.closest(".playlist-item");
+    const item = event.target.closest(".queue-item");
     if (!item) return;
 
     document
-      .querySelectorAll(".playlist-item")
+      .querySelectorAll(".queue-item")
       .forEach((el) => el.classList.remove("active"));
     item.classList.add("active");
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     featuredTitle.textContent = songTitle;
     featuredLabel.textContent = artistName;
-    featuredImage.src = songImage;
+    // featuredImage.src = songImage;
 
     if (!filePath) {
       console.error("Không tìm thấy đường dẫn file.");

@@ -354,11 +354,28 @@ ul#suggestions li:hover {
   align-items: center;
 }
 
+.queue-item {
+  display: grid;
+  grid-template-columns: 1fr 50px 2fr;
+  padding: 12px 0;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  align-items: center;
+}
+
 .playlist-item:hover {
   background-color: var(--hover-color);
 }
 
 .playlist-item.active {
+  background-color: var(--hover-color);
+}
+
+.queue-item.active {
+  background-color: var(--hover-color);
+}
+
+.queue-item:hover {
   background-color: var(--hover-color);
 }
 
@@ -682,3 +699,7 @@ ul#suggestions li:hover {
 .queue-number {
   display: none;
 }
+
+/* .playlist-image_src {
+  display: none;
+} */
