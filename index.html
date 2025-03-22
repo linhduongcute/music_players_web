@@ -3,297 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music Player</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="uploads.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css" />
   </head>
-
   <body>
-    <div class="app-container">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <header class="logo"><i class="fab fa-apple"></i> Music</header>
-        <section class="user-profile">
-          <img
-            src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-            alt="User Profile"
-          />
-          <div class="user-info">
-            <div class="user-name">Vitaliy Dorozhko</div>
-            <div class="user-status">Premium member</div>
-          </div>
-        </section>
-        <nav class="menu">
-          <section class="menu-section">
-            <header class="menu-header">
-              <span>Music</span>
-              <span class="count">5</span>
-            </header>
-            <ul class="menu-list">
-              <li class="active"><i class="fas fa-home"></i> Home</li>
-              <li><i class="fas fa-compass"></i> Discover</li>
-              <li id="browseButton"><i class="fas fa-th-large"></i> Browse</li>
-              <li id="favButton"><i class="fas fa-th-large"></i> Favorite</li>
-              <li>
-                <i class="fas fa-podcast"></i> Podcasts
-                <span class="new-badge">NEW</span>
-              </li>
-              <li><i class="fas fa-broadcast-tower"></i> Radio</li>
-            </ul>
-          </section>
-
-          <section class="menu-section">
-            <header class="menu-header">
-              <span>Library</span>
-              <span class="count">3</span>
-            </header>
-            <ul class="menu-list">
-              <li id="favoriteSongsListButton">
-                <i class="fas fa-compact-disc"></i> Favorite Songs
-              </li>
-              <li><i class="fas fa-user-friends"></i> Artists</li>
-            </ul>
-          </section>
-        </nav>
-        <ul class="menu-list">
-          <li onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> Log out
-          </li>
-        </ul>
-      </aside>
-      <main>
-        <!---Result-->
-        <div id="searchResult" class="hidden">
-          <div class="resultContainer">
-            <section>
-              <header class="resultHeader">
-                <h2>Result</h2>
-              </header>
-  
-              <div class="resultContainer">
-                <ul id="suggestions" style="display:none;"></ul>
-                <div id="results"></div>
-              </div>
-            </section>
-  
-            <ul class="favList">
-  
-            </ul>
-          </div>
-        </div>
-
-        <!---Favourite Song-->
-        <div id="favoriteSongsSection" class="hidden">
-          <section>
-            <header class="section-header">
-              <h2>Favorite Songs</h2>
-            </header>
-
-            <div class="playlist-header">
-              <span class="playlist-number">#</span>
-              <span class="playlist-title">TITLE</span>
-              <span class="playlist-artist">ARTIST</span>
-              <span class="playlist-time">TIME</span>
-              <span class="playlist-album">ALBUM</span>
-            </div>
-          </section>
-
-          <ul class="favList">
-
-          </ul>
-        </div>
-        <!-- Browse Section -->
-
-        <div id="uploadDownloadSection" class="hidden">
-          <section>
-            <h2>Upload Music</h2>
-            <div id="uploadForm" class="upload-container">
-              <label for="songTitle" class="upload-label"
-                >🎵 Tên bài hát:</label
-              >
-              <input
-                type="text"
-                id="songTitle"
-                class="upload-input"
-                placeholder="Nhập tên bài hát"
-              />
-
-              <label for="artistName" class="upload-label">🎤 Nghệ sĩ:</label>
-              <input
-                type="text"
-                id="artistName"
-                class="upload-input"
-                placeholder="Nhập tên nghệ sĩ"
-              />
-              <label for="albumName" class="upload-label">💿 Album:</label>
-              <input
-                type="text"
-                id="albumName"
-                class="upload-input"
-                placeholder="Nhập tên album"
-              />
-
-              <label for="fileInput" class="upload-label"
-                >📁 Chọn file MP3:</label
-              >
-              <input
-                type="file"
-                id="fileInput"
-                class="upload-input"
-                accept="audio/mp3"
-              />
-
-              <button id="uploadButton" class="upload-button">⬆ Upload</button>
-            </div>
-            <div id="uploadStatus" class="upload-status"></div>
-          </section>
-          <section class="playlist-section">
-            <header class="section-header">
-              <h2>Uploaded Songs</h2>
-            </header>
-
-            <div class="playlist-header">
-              <span class="playlist-number">#</span>
-              <span class="playlist-title">TITLE</span>
-              <span class="playlist-artist">ARTIST</span>
-              <span class="playlist-time">TIME</span>
-              <span class="playlist-album">ALBUM</span>
-            </div>
-
-            <ul class="playlist-items" id="songList">
-              <!-- Các bài hát sẽ được load ở đây từ JavaScript -->
-            </ul>
-          </section>
-        </div>
-        <!-- Main Content -->
-        <div class="main-content">
-          <section class="search-bar">
-            <i class="fas fa-search"></i>
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search for a song..."
-              autocomplete="off"
-            />
-            <ul id="suggestions"></ul>
-          </section>
-          <section class="listening-section">
-            <article class="featured-card">
-              <div class="featured-info">
-                <span id="featured-label" class="featured-label"
-                  >Select a song...</span
-                >
-                <h2 class="featured-title">
-                  Listening: <span id="song-listening">...</span>
-                </h2>
-                <div class="featured-actions">
-                  <button id="download-button" class="download-button">
-                    <i class="fas fa-download"></i> Download
-                  </button>
-                  <button class="follow-button">Follow</button>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          <section class="song-cover">
-            <div class="image-spinner">
-              <img
-                src="https://dangcapdigital.vn/img/app/zingmp3-aszyd.png"
-                alt="Album Cover"
-                id="mainImg"
-              />
-            </div>
-          </section>
-
-          <!-- Player Controller -->
-          <section class="player-controls">
-            <div class="player-buttons">
-              <button class="player-button" id="addFavButton">
-                <i class="far fa-heart"></i>
-              </button>
-              <button class="player-button" id="prevButton">
-                <i class="fas fa-step-backward"></i>
-              </button>
-              <button class="player-button play-pause" id="playPauseBtn">
-                <i class="fas fa-play"></i>
-              </button>
-              <button class="player-button" id="nextButton">
-                <i class="fas fa-step-forward"></i>
-              </button>
-              <button class="player-button" id="replayButton">
-                <i class="fas fa-redo"></i>
-              </button>
-            </div>
-            <div class="player-progress">
-              <span id="currentTime">0:00</span>
-              <div class="progress-bar" id="progressBar">
-                <div class="progress-filled" id="progressFilled"></div>
-              </div>
-              <span id="totalTime">0:00</span>
-            </div>
-          </section>
-
-          <audio id="audio">
-            <source src="test.mp3" type="audio/mp3" />
-          </audio>
-        </div>
-      </main>
-      <!-- Right Sidebar -->
-      <aside class="right-sidebar">
-        <header class="section-header">
-          <h2>Queue</h2>
-        </header>
-        <ul class="playlist-items" id="playlist">
-          <!-- Bài hát sẽ được thêm vào đây sau khi ấn Play -->
-        </ul>
-
-        <!-- <section class="played-section">
-          <header class="section-header">
-            <h2>Played</h2>
-            <a href="#" class="see-all">See all</a>
-          </header>
-          <ul class="played-items">
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">Blank Space</span>
-                <br />
-                <span class="played-artist">Taylor Swift</span>
-              </div>
-              <time class="played-time">4 min ago</time>
-            </li>
-            <li class="played-item">
-              <img
-                src="https://dummyimage.com/50x50/ccc/000.png&text=?"
-                alt="Album Cover"
-              />
-              <div class="played-info">
-                <span class="played-title">Side Effects</span>
-                <br />
-                <span class="played-artist">The Chainsmokers</span>
-              </div>
-              <time class="played-time">20 min ago</time>
-            </li>
-          </ul>
-        </section> -->
-      </aside>
+    <div class="login-container">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Enter email" required />
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+        required
+      />
+      <button onclick="login()">Login</button>
+      <p id="error-message"></p>
     </div>
-    <script src="playerControls.js"></script>
+
+    <script>
+      function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (email === "admin@example.com" && password === "123456") {
+          localStorage.setItem("isLoggedIn", "true");
+          window.location.href = "main.html"; // Chuyển hướng tới trang chủ
+        } else {
+          document.getElementById("error-message").innerText =
+            "Sai email hoặc mật khẩu!";
+        }
+      }
+    </script>
   </body>
-  <script src="script.js"></script>
-  <script src="uploads.js"></script>
-  <script src="search-bar.js"></script>
-  <script src="favourite.js"></script>
 </html>

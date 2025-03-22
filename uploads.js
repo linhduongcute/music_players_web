@@ -44,9 +44,23 @@ async function uploadMusic() {
   const songTitle = document.getElementById("songTitle").value.trim();
   const artistName = document.getElementById("artistName").value.trim();
   const albumName = document.getElementById("albumName").value.trim();
+  let imageUrl = document.getElementById("imageInput").value.trim(); // Lấy link ảnh
 
   if (!fileInput || !songTitle || !artistName || !albumName) {
     Swal.fire("Lỗi!", "Vui lòng nhập đầy đủ thông tin bài hát!", "warning");
+    return;
+  }
+
+  // Kiểm tra xem link ảnh có đúng định dạng URL không
+  const urlPattern =
+    /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp)(\?.*)?$|https?:\/\/.*(googleusercontent|images\.app\.goo\.gl|imgur\.com|flickr\.com|drive\.google\.com).*)$/i;
+
+  // Nếu không nhập link ảnh (để trống) thì vẫn hợp lệ
+  if (imageUrl.trim() === "") {
+    imageUrl =
+      "https://i.pinimg.com/236x/4f/11/5d/4f115daf9b8075f69d3e238a4313a3ec.jpg";
+  } else if (!urlPattern.test(imageUrl)) {
+    Swal.fire("Lỗi!", "Vui lòng nhập link ảnh hợp lệ!", "warning");
     return;
   }
 
@@ -74,14 +88,28 @@ async function uploadMusic() {
 
   audio.addEventListener("loadedmetadata", function () {
     let duration = formatTime(audio.duration.toFixed(2));
-    saveSongInfo(songTitle, artistName, duration, albumName, sanitizedFilePath);
+    saveSongInfo(
+      songTitle,
+      artistName,
+      duration,
+      albumName,
+      sanitizedFilePath,
+      imageUrl
+    ); // Thêm ảnh vào DB
   });
 
   audio.load();
 }
 
-async function saveSongInfo(title, artist, duration, album, filePath) {
-  await addSong(title, artist, duration, album, filePath);
+async function saveSongInfo(
+  title,
+  artist,
+  duration,
+  album,
+  filePath,
+  imageUrl
+) {
+  await addSong(title, artist, duration, album, filePath, imageUrl);
   Swal.fire("Thành công!", "Upload bài hát thành công!", "success");
   loadSongs();
 }
@@ -128,7 +156,7 @@ async function loadSongs() {
     songItem.dataset.file_path = song.file_path || "";
     songItem.dataset.image_src =
       song.image_src ||
-      "https://www.wagbet.com/wp-content/uploads/2019/11/music_placeholder.png";
+      "https://i.pinimg.com/236x/4f/11/5d/4f115daf9b8075f69d3e238a4313a3ec.jpg'::text";
 
     songItem.innerHTML = `
       <span class="playlist-number">${index + 1}</span>
@@ -162,7 +190,7 @@ function attachSongClickEvent() {
       }
       addToPlaylist(title, artist, time, album, path, image_src);
       const songUrl = getSongURL(path);
-      document.getElementById("mainImg").src =  item.dataset.image_src;
+      document.getElementById("mainImg").src = item.dataset.image_src;
       console.log("FilePath từ dataset:", item.dataset.file_path);
       console.log("URL anhr từ Supabase:", item.dataset.image_src);
       console.log("URL nhạc từ Supabase:", songUrl);

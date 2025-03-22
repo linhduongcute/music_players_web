@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.warn("Không thể tự động phát bài hát:", error);
     });
   });
-  
+
   replayBtn.addEventListener("click", function () {
     audio.currentTime = 0;
     audio.play();
@@ -72,9 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Danh sách bài hát trống!");
       return;
     }
-  
-    document.querySelectorAll(".playlist-item").forEach((item) => item.classList.remove("active"));
-  
+
+    document
+      .querySelectorAll(".playlist-item")
+      .forEach((item) => item.classList.remove("active"));
+
     if (SongIndex < playlistArray.length - 1) {
       SongIndex++;
     } else {
@@ -82,15 +84,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     songName.textContent = playlistArray[SongIndex].title;
-    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
+    document
+      .querySelectorAll(".playlist-item")
+      [SongIndex]?.classList.add("active");
     audio.src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${playlistArray[SongIndex].filePath}`;
     audio.play().catch((error) => {
       console.warn("Không thể tự động phát bài hát:", error);
     });
-  
-    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
+
+    document
+      .querySelectorAll(".playlist-item")
+      [SongIndex]?.classList.add("active");
   });
-  
 
   playPrevBtn.addEventListener("click", function () {
     if (playlistArray.length === 0) {
@@ -98,7 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    document.querySelectorAll(".playlist-item").forEach((item) => item.classList.remove("active"));
+    document
+      .querySelectorAll(".playlist-item")
+      .forEach((item) => item.classList.remove("active"));
 
     if (SongIndex != 0 || SongIndex < playlistArray.length - 1) {
       SongIndex--;
@@ -108,12 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
     songName.textContent = playlistArray[SongIndex].title;
     audio.src = `https://oscyuefajpcsopwmvwhf.supabase.co/storage/v1/object/public/music/${playlistArray[SongIndex].filePath}`;
     audio.play();
-    document.querySelectorAll(".playlist-item")[SongIndex]?.classList.add("active");
+    document
+      .querySelectorAll(".playlist-item")
+      [SongIndex]?.classList.add("active");
   });
 
   addFavButton.addEventListener("click", async function () {
     const audioElement = document.getElementById("audio");
-
     if (!audioElement.src) {
       Swal.fire({
         icon: "error",
@@ -124,30 +132,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Thêm bài hát vào bảng `favourite`
-    const { error } = await supabaseClient.from("favourite").insert([
-      {
-        title: playlistArray[SongIndex].title,
-        artist:  playlistArray[SongIndex].artist,
-        duration: audio.duration,
-        album: playlistArray[SongIndex].album,
-        file_path: playlistArray[SongIndex].filePath,
-      },
-    ]);
 
-    if (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Lỗi!",
-        text: `Không thể thêm bài hát: ${error.message}`,
-      });
-    } else {
+    try {
       Swal.fire({
         icon: "success",
         title: "Thành công!",
         text: "Bài hát đã được thêm vào danh sách yêu thích!",
       });
+      const { error } = await supabaseClient.from("favourite").insert([
+        {
+          title: playlistArray[SongIndex].title,
+          artist: playlistArray[SongIndex].artist,
+          duration: audio.duration,
+          album: playlistArray[SongIndex].album,
+          file_path: playlistArray[SongIndex].filePath,
+        },
+      ]);
+
+      fetchFavoriteSongs();
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: `Không thể thêm bài hát: ${error.message}`,
+      });
     }
-    fetchFavoriteSongs();
   });
 });
 
@@ -165,3 +174,27 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+const section = document.getElementById("favoriteSongsSection");
+const playlistContainer = document.createElement("div");
+async function removeFromFavorites(songId) {
+  try {
+    const { error } = await supabaseClient
+      .from("favourite")
+      .delete()
+      .eq("id", songId);
+
+    if (error) throw error;
+    console.log("Đã xóa bài hát khỏi danh sách yêu thích.");
+
+    // Xóa bài hát khỏi giao diện ngay lập tức
+    const songElement = document.getElementById(`song-${songId}`);
+    if (songElement) {
+      songElement.remove();
+    }
+  } catch (error) {
+    console.error(
+      "Lỗi khi xóa bài hát khỏi danh sách yêu thích:",
+      error.message
+    );
+  }
+}

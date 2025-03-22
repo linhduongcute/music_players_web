@@ -176,7 +176,6 @@ ul#suggestions li:hover {
   background-color: #ddd;
 }
 
-
 /* Main Content Styles */
 .main-content {
   padding: 20px;
@@ -243,10 +242,8 @@ ul#suggestions li:hover {
   margin-bottom: 30px;
   position: relative;
   overflow: hidden;
-  color: white; 
+  color: white;
 }
-
-
 
 .featured-info {
   flex: 1;
@@ -616,13 +613,12 @@ ul#suggestions li:hover {
 #favoriteSongsSection {
   display: none;
   padding: 20px;
-  background: var(--card-bg);
   border-radius: 10px;
   width: 95%;
   margin: auto;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   animation: fadeIn 0.5s ease-in-out;
-  margin-top : 10px;
+  margin-top: 10px;
 }
 
 /* #favoriteSongsList {
@@ -659,10 +655,10 @@ ul#suggestions li:hover {
 }
 
 .image-spinner {
-  width: 300px; 
+  width: 300px;
   height: 300px;
   border-radius: 50%;
-  overflow: hidden; 
+  overflow: hidden;
   border: 5px solid rgba(0, 0, 0, 0.1);
   animation: spin 20s linear infinite;
 }
@@ -674,21 +670,25 @@ ul#suggestions li:hover {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .song-cover {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   margin-bottom: 15px;
 }
 
 .queue-first {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 
 .queue-number {
@@ -719,3 +719,19 @@ ul#suggestions li:hover {
 .resultBox img {
   border-radius: 10px;
 } */
+
+.remove-btn {
+  background-color: var(--border-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: var(--primary-bg);
+}

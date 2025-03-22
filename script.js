@@ -79,12 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (error || !data) {
       console.error("Lỗi hoặc không tìm thấy bài hát:", error?.message);
-      return "default-image.jpg"; 
+      return "https://i.pinimg.com/236x/4f/11/5d/4f115daf9b8075f69d3e238a4313a3ec.jpg";
     }
     return data.image_src;
-}
-
-  
+  }
 
   // Khi click vào bài hát trong playlist, cập nhật thông tin và phát nhạc
   playlistElement.addEventListener("click", async function (event) {
@@ -100,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const artistName = item.querySelector(".playlist-artist").textContent;
     const filePath = item.dataset.file_path; // Đường dẫn file trong Storage
     const image_src = await getSongImage(songTitle);
-    console.log (image_src);
+    console.log(image_src);
     featuredTitle.textContent = songTitle;
     featuredLabel.textContent = artistName;
     document.getElementById("mainImg").src = image_src;
@@ -203,7 +201,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const fileInput = document.getElementById("fileInput");
   const uploadButton = document.getElementById("uploadButton");
 
-  if (browseButton && homeButton && mainContent && uploadSection && favButton && favSection) {
+  if (
+    browseButton &&
+    homeButton &&
+    mainContent &&
+    uploadSection &&
+    favButton &&
+    favSection
+  ) {
     // Khi bấm "Browse", ẩn trang chủ và hiển thị phần upload
     browseButton.addEventListener("click", function () {
       mainContent.style.display = "none";
@@ -235,45 +240,52 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
 async function fetchFavoriteSongs() {
   try {
-      // Truy vấn tất cả bài hát từ bảng `songs`
-      const { data, error } = await supabaseClient
-          .from("favourite")
-          .select("id, title, artist, duration, album");
+    // Truy vấn tất cả bài hát từ bảng `songs`
+    const { data, error } = await supabaseClient
+      .from("favourite")
+      .select("id, title, artist, duration, album");
 
-      if (error) throw error; // Báo lỗi nếu truy vấn thất bại
+    if (error) throw error; // Báo lỗi nếu truy vấn thất bại
 
-      // Kiểm tra nếu không có bài hát
-      if (!data || data.length === 0) {
-          console.log("Không có bài hát nào trong danh sách yêu thích.");
-          return;
-      }
+    // Kiểm tra nếu không có bài hát
+    if (!data || data.length === 0) {
+      console.log("Không có bài hát nào trong danh sách yêu thích.");
+      return;
+    }
 
-      // Chèn dữ liệu vào HTML
-      const section = document.getElementById("favoriteSongsSection");
-      const playlistContainer = document.createElement("div");
-      playlistContainer.classList.add("playlist-container");
+    // Chèn dữ liệu vào HTML
+    const section = document.getElementById("favoriteSongsSection");
+    const playlistContainer = document.createElement("div");
+    playlistContainer.classList.add("playlist-container");
 
-      data.forEach((song, index) => {
-          const songRow = document.createElement("li");
-          songRow.classList.add("playlist-row");
-          songRow.innerHTML = `
+    data.forEach((song, index) => {
+      const songRow = document.createElement("li");
+      songRow.classList.add("playlist-item");
+      songRow.innerHTML = `
               <span class="playlist-number">${index + 1}</span>
               <span class="playlist-title">${song.title}</span>
               <span class="playlist-artist">${song.artist}</span>
               <span class="playlist-time">${song.duration}</span>
               <span class="playlist-album">${song.album}</span>
+              <button class="remove-btn" onclick="removeFromFavorites(${
+                song.id
+              })">X</button>
           `;
+      playlistContainer.appendChild(songRow);
+      const removeBtn = songRow.querySelector(".remove-btn");
 
-          playlistContainer.appendChild(songRow);
+      removeBtn.addEventListener("click", async function () {
+        await removeFromFavorites(song.id); // Xóa khỏi database
+        songRow.remove(); // Xóa khỏi giao diện
       });
+    });
 
-      section.appendChild(playlistContainer);
-      section.classList.remove("hidden"); // Hiển thị danh sách bài hát
+    section.appendChild(playlistContainer);
+    section.classList.remove("hidden"); // Hiển thị danh sách bài hát
   } catch (error) {
-      console.error("Lỗi khi tải danh sách bài hát:", error.message);
+    console.error("Lỗi khi tải danh sách bài hát:", error.message);
   }
 }
 
